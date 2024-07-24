@@ -49,6 +49,13 @@ public class PlayerController : MonoBehaviour
     }
 
 
+
+    public void TeleportPlayerTo(Transform target)
+    {
+        _rb.position = target.position;
+    }
+
+
     private void TryInteract()
     {
         if (CanInteract && Input.GetKeyDown(KeyCode.E))
@@ -87,7 +94,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
