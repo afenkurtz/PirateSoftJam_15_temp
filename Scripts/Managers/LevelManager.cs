@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour, IGameManager
      */
     [SerializeField] GameObject playerAndCameraPrefab;
 
+    private GameObject currentPlayerInstance;
+
     public void LoadSceneOnly(LevelNames sceneName)
     {
         StartCoroutine(LoadAsyncSceneOnly(sceneName));
@@ -30,6 +32,12 @@ public class LevelManager : MonoBehaviour, IGameManager
     public void LoadSceneAndPlayer(LevelNames sceneName)
     {
         StartCoroutine(LoadAsyncSceneAndPlayer(sceneName));
+    }
+
+    public void TeleportPlayer(Transform target)
+    {
+        PlayerController controller = currentPlayerInstance.GetComponentInChildren<PlayerController>();
+        controller.TeleportPlayerTo(target);
     }
 
     IEnumerator LoadAsyncSceneOnly(LevelNames m_Scene)
@@ -64,8 +72,10 @@ public class LevelManager : MonoBehaviour, IGameManager
             yield return null;
         }
 
+        currentPlayerInstance = Instantiate(playerAndCameraPrefab);
+
         // Move the GameObject (you attach this in the Inspector) to the newly loaded Scene
-        SceneManager.MoveGameObjectToScene(Instantiate(playerAndCameraPrefab), SceneManager.GetSceneByName(m_Scene.ToString()));
+        SceneManager.MoveGameObjectToScene(currentPlayerInstance, SceneManager.GetSceneByName(m_Scene.ToString()));
 
         // Unload the previous Scene
         SceneManager.UnloadSceneAsync(currentScene);

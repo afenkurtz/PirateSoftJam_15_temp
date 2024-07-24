@@ -18,6 +18,6 @@ public class Door_ToTransform : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-
+        Managers.Level.TeleportPlayer(targetLocation);
     }
 }
