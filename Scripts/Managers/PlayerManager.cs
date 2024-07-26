@@ -13,11 +13,13 @@ public class PlayerManager : MonoBehaviour, IGameManager
     {
         Debug.Log("PlayerManager starting...");
 
+        money = 0;
+
         Status = ManagerStatus.Started;
     }
 
     /*
      * ------------------------------PlayerManager------------------------------
      */
-    
+    public int money { get; private set; }
 }

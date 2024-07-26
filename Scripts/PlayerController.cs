@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 3000f;
     [SerializeField] float moveDrag = 15f;
-    [SerializeField] float stillDrag = 50f;
+    [SerializeField] float stillDrag = 75f;
 
     [SerializeField] GameObject playerInteractionPopup;
 
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         TryInteract();
 
+        moveInput = GetInput();
+
         currentSpeed = _rb.velocity.magnitude;
         _anim.SetFloat("speed", currentSpeed);
 
@@ -39,7 +41,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveInput = GetInput();
+        if (Managers.Dialogue.DialogueIsPlaying)
+        {
+            return;
+        }
 
         SetDrag();
 

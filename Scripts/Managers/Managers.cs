@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerManager))]
 [RequireComponent(typeof(LevelManager))]
 [RequireComponent(typeof(CheatsManager))]
+[RequireComponent(typeof(DialogueManager))]
 public class Managers : MonoBehaviour
 {
     /*
@@ -16,8 +17,11 @@ public class Managers : MonoBehaviour
     public static PlayerManager Player { get; private set; }
     public static LevelManager Level { get; private set; }
     public static CheatsManager Cheats { get; private set; }
+    public static DialogueManager Dialogue { get; private set; }
 
     private List<IGameManager> startSequence;
+
+
 
     private void Awake()
     {
@@ -29,6 +33,7 @@ public class Managers : MonoBehaviour
         Player = GetComponent<PlayerManager>();
         Level = GetComponent<LevelManager>();
         Cheats = GetComponent<CheatsManager>();
+        Dialogue = GetComponent<DialogueManager>();
 
         startSequence = new List<IGameManager>();
         /*
@@ -37,9 +42,12 @@ public class Managers : MonoBehaviour
         startSequence.Add(Player);
         startSequence.Add(Level);
         startSequence.Add(Cheats);
+        startSequence.Add(Dialogue);
 
         StartCoroutine(StartupManagers());
     }
+
+
 
     private IEnumerator StartupManagers()
     {
