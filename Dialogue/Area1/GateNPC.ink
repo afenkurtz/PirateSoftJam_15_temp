@@ -1,0 +1,1 @@
+You know the rules. The fee to travel to the next district is $50.

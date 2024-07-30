@@ -46,6 +46,11 @@ public class StartupController : MonoBehaviour
         Managers.Level.LoadSceneOnly(LevelNames.WorldMap);
     }
 
+    public void LoadIntroScene()
+    {
+        Managers.Level.LoadSceneAndPlayer(LevelNames.Area1_Apartment_IntroOnly);
+    }
+
     public void LoadArea1Scene()
     {
         Managers.Level.LoadSceneAndPlayer(LevelNames.Area1);

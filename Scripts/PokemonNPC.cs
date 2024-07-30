@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
- * This code is from the following: https://github.com/shapedbyrainstudios/ink-dialogue-system
- */
 public class PokemonNPC : MonoBehaviour
 {
     [SerializeField] Color defaultColor = Color.white;

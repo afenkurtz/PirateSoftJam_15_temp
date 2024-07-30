@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 
-/*
- * This code is from the following: https://github.com/shapedbyrainstudios/ink-dialogue-system
- */
 public class DialogueVariables
 {
     public Dictionary<string, Ink.Runtime.Object> variables { get; private set; }

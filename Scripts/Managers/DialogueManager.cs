@@ -4,12 +4,6 @@ using UnityEngine;
 using Ink.Runtime;
 using TMPro;
 
-/*
- * Most of this code is from the following: https://github.com/shapedbyrainstudios/ink-dialogue-system
- * Because my managers are initialized at startup and persist through all scenes with DontDestroyOnLoad, 
- * I had to rework how the UI works here. I made it a prefab and got the components from there
- * So that they can be instantiated when needed.
- */
 public class DialogueManager : MonoBehaviour, IGameManager
 {
     /*
@@ -77,12 +71,12 @@ public class DialogueManager : MonoBehaviour, IGameManager
 
         dialogueVariables.StartListening(currentStory);
 
-        /*
+        
         currentStory.BindExternalFunction("updateMoney", (int player_money) =>
         {
             Debug.Log(player_money);
         });
-        */
+        
 
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -101,7 +95,7 @@ public class DialogueManager : MonoBehaviour, IGameManager
 
         dialogueVariables.StopListening(currentStory);
 
-        // currentStory.UnbindExternalFunction("updateMoney");
+        currentStory.UnbindExternalFunction("updateMoney");
 
         DialogueIsPlaying = false;
         Destroy(currentDialoguePanel);
@@ -117,18 +111,7 @@ public class DialogueManager : MonoBehaviour, IGameManager
             {
                 StopCoroutine(displayLineCoroutine);
             }
-            string nextLine = currentStory.Continue();
-            // handle case where the last line is an external function
-            if (nextLine.Equals("") && !currentStory.canContinue)
-            {
-                StartCoroutine(ExitDialogueMode());
-            }
-            // otherwise handle tags and display line as normal
-            else
-            {
-                // handle tags here
-                displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
-            }
+            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
         }
         else
         {

@@ -21,8 +21,6 @@ public class Managers : MonoBehaviour
 
     private List<IGameManager> startSequence;
 
-
-
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -46,8 +44,6 @@ public class Managers : MonoBehaviour
 
         StartCoroutine(StartupManagers());
     }
-
-
 
     private IEnumerator StartupManagers()
     {

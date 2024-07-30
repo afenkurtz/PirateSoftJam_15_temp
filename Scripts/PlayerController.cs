@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private bool CanInteract = false;
     private Collider2D currentCollision = null;
 
+    /*
+     * ------------------------------MonoBehavior Methods------------------------------
+     */
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -53,13 +57,29 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce((calculatedMovement * moveSpeed) * Time.fixedDeltaTime);
     }
 
-
-
-    public void TeleportPlayerTo(Transform target)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        _rb.position = target.position;
+        if (collision.GetComponent<IInteractable>() != null)
+        {
+            playerInteractionPopup.SetActive(true);
+            currentCollision = collision;
+            CanInteract = true;
+        }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<IInteractable>() != null)
+        {
+            playerInteractionPopup.SetActive(false);
+            currentCollision = null;
+            CanInteract = false;
+        }
+    }
+
+    /*
+     * ------------------------------Private Methods------------------------------
+     */
 
     private void TryInteract()
     {
@@ -67,6 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             var interactable = currentCollision.GetComponent<IInteractable>();
             interactable.Interact();
+            CanInteract = false;
         }
     }
 
@@ -99,25 +120,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+    /*
+     * ------------------------------Public Methods------------------------------
+     */
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void TeleportPlayerTo(Transform target)
     {
-        if (collision.GetComponent<IInteractable>() != null)
-        {
-            playerInteractionPopup.SetActive(true);
-            currentCollision = collision;
-            CanInteract = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.GetComponent<IInteractable>() != null)
-        {
-            playerInteractionPopup.SetActive(false);
-            currentCollision = null;
-            CanInteract = false;
-        }
+        _rb.position = target.position;
     }
 }
